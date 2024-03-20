@@ -1,25 +1,31 @@
 package lv.rvt;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 
 public class App 
 {
     public static void main( String[] args )
     {
-        Path path = Utils.getFilePath("data.csv");
-        try {
-            List<String> lines = Files.readAllLines(path);
-            
-            for (String string : lines) {
-                System.out.println(string);
+        long lastId = -1;
+        try (BufferedReader reader = Utils.getReader("data.csv")) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
             }
-        } catch (IOException e) {
-            System.out.println("File not found: " + path.toAbsolutePath());
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        try (BufferedWriter writter = Utils.getWriter("data.csv")) {
+            writter.newLine();
+            writter.write("2, user, 123");
+            writter.flush();
         
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
 
     }
 
