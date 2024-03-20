@@ -19,9 +19,9 @@ public class App
         }
 
         try (BufferedWriter writter = Utils.getWriter("data.csv")) {
-            writter.newLine();
-            writter.write("2, user, 123");
-            writter.flush();
+            // writter.newLine();
+            // writter.write("2, user, 123");
+            // writter.flush();
         
         } catch (Exception e) {
             // TODO: handle exception
