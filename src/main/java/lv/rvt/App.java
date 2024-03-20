@@ -1,28 +1,25 @@
 package lv.rvt;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
 
 public class App 
 {
     public static void main( String[] args )
     {
-        BufferedReader reader = Utils.getFileReader("data.csv");
-
-        String line;
+        Path path = Utils.getFilePath("data.csv");
         try {
-            while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+            List<String> lines = Files.readAllLines(path);
+            
+            for (String string : lines) {
+                System.out.println(string);
             }
         } catch (IOException e) {
-            System.out.println("Error while reading: " + e.getStackTrace());
+            System.out.println("File not found: " + path.toAbsolutePath());
         }
-
+        
 
     }
 

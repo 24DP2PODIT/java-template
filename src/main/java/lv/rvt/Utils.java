@@ -1,23 +1,19 @@
 package lv.rvt;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Utils {
-    public static BufferedReader getFileReader(String filename) {
-        
+    public static Path getFilePath(String filename) {
         try {
-            InputStream inputStream = App.class.getResourceAsStream(File.separator + filename);
-            if (inputStream == null) {
-                throw new FileNotFoundException();
+            URL resourceUrl = App.class.getClassLoader().getResource(filename);
+            if (resourceUrl == null) {
+                throw new FileNotFoundException("File not found: " + filename);
             }
-            return new BufferedReader(new InputStreamReader(inputStream));
-
-        } catch (IOException e) {
+            return Paths.get(resourceUrl.toURI());
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
